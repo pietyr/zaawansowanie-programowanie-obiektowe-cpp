@@ -9,7 +9,8 @@
 
 using namespace std;
 
-void alternative(set<int> s1, set<int> s2) {
+template <typename T>
+void alternative(set<T> s1, set<T> s2) {
 
 }
 
