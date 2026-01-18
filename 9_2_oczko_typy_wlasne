@@ -1,0 +1,118 @@
+
+// Typy własne:
+#include <iostream>
+#include <string>
+#include <limits>
+
+// ------------------
+// Klasa bazowa
+// ------------------
+class GameException {
+public:
+    virtual std::string message() const = 0;   // metoda wirtualna czysto
+    virtual ~GameException() = default;
+};
+
+// ------------------
+// Klasy wyjątków
+// ------------------
+
+// 1. suma == 21
+class OczkoException : public GameException {
+    std::string msg;
+public:
+    OczkoException(const std::string& m) : msg(m) {}
+    std::string message() const override { return msg; }
+};
+
+// 2. suma > 21
+class PrzekroczonoSumeException : public GameException {
+    std::string msg;
+public:
+    PrzekroczonoSumeException(const std::string& m) : msg(m) {}
+    std::string message() const override { return msg; }
+};
+
+// 3. liczba spoza zakresu [1,10]
+class ZlyZakresException : public GameException {
+    std::string msg;
+public:
+    ZlyZakresException(const std::string& m) : msg(m) {}
+    std::string message() const override { return msg; }
+};
+
+// 4. zły typ danych
+class ZlyTypDanychException : public GameException {
+    std::string msg;
+public:
+    ZlyTypDanychException(const std::string& m) : msg(m) {}
+    std::string message() const override { return msg; }
+};
+
+// ------------------
+// Program główny
+// ------------------
+int main() {
+    int suma = 0;
+    int proby = 0;
+
+    std::cout << "Gra w oczko (21). Podawaj liczby z zakresu [1,10].\n";
+
+    while (true) {
+        try {
+            int x;
+            std::cout << "Podaj liczbe: ";
+
+            // Sprawdzenie typu danych
+            if (!(std::cin >> x)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw ZlyTypDanychException("Niewłaściwy typ danych");
+            }
+
+            proby++;
+
+            // Zakres [1,10]
+            if (x <= 0 || x > 10) {
+                throw ZlyZakresException("Podaj liczbę z zakresu [1,10]");
+            }
+
+            suma += x;
+
+            if (suma == 21) {
+                throw OczkoException("Osiągnąłeś oczko!");
+            }
+            if (suma > 21) {
+                suma -= x; // cofnięcie
+                throw PrzekroczonoSumeException("Suma została przekroczona");
+            }
+
+            std::cout << "Aktualna suma: " << suma << "\n";
+        }
+
+        // -------------------------
+        // Obsługa wyjątków (polimorfizm)
+        // -------------------------
+
+        catch (const OczkoException& e) {
+            std::cout << e.message() << "\n";
+            std::cout << "Osiągnąłeś oczko po " << proby << " próbach.\n";
+            return 0;
+        }
+
+        catch (const PrzekroczonoSumeException& e) {
+            std::cout << e.message() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        catch (const ZlyZakresException& e) {
+            std::cout << e.message() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        catch (const ZlyTypDanychException& e) {
+            std::cout << e.message() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+    }
+}

@@ -1,0 +1,74 @@
+
+// Klasa exception:
+#include <iostream>
+#include <stdexcept>
+#include <limits>
+
+int main() {
+    int suma = 0;
+    int proby = 0;
+
+    std::cout << "Gra w oczko (21). Podawaj liczby z zakresu [1,10].\n";
+
+    while (true) {
+
+        try {
+            int x;
+            std::cout << "Podaj liczbę: ";
+
+            // Sprawdzenie typu danych
+            if (!(std::cin >> x)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::invalid_argument("Niewłaściwy typ danych");
+            }
+
+            proby++;
+
+            // Zakres [1,10]
+            if (x <= 0 || x > 10) {
+                throw std::out_of_range("Podaj liczbę z zakresu [1,10]");
+            }
+
+            suma += x;
+
+            // Dokładnie 21 → logic_error
+            if (suma == 21) {
+                throw std::logic_error("Osiągnąłeś oczko!");
+            }
+
+            // Przekroczenie sumy → overflow_error
+            if (suma > 21) {
+                suma -= x; // cofnięcie ostatniego ruchu
+                throw std::overflow_error("Suma została przekroczona");
+            }
+
+            std::cout << "Aktualna suma: " << suma << "\n";
+        }
+
+        // ----------------------------
+        // OBSŁUGA WYJĄTKÓW
+        // ----------------------------
+
+        catch (const std::logic_error& e) {
+            std::cout << e.what() << "\n";
+            std::cout << "Osiągnąłeś oczko po " << proby << " próbach.\n";
+            return 0;
+        }
+
+        catch (const std::overflow_error& e) {
+            std::cout << e.what() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        catch (const std::out_of_range& e) {
+            std::cout << e.what() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        catch (const std::invalid_argument& e) {
+            std::cout << e.what() << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+    }
+}

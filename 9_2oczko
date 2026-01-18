@@ -1,0 +1,76 @@
+//błędy i wyjątki - typy proste itp.
+#include <iostream>
+#include <limits>
+
+int main() {
+    int suma = 0;
+    int proby = 0;
+
+    std::cout << "Gra w oczko (21). Podawaj liczby z zakresu [1,10].\n";
+
+    while (true) {
+        try {
+            int x;
+            std::cout << "Podaj liczbe: ";
+
+            // Sprawdzenie typu danych
+            if (!(std::cin >> x)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                static double blad = 1.0; // referencja musi mieć obiekt
+                throw blad;               // wyrzucamy referencję typu double
+            }
+
+            proby++;
+
+            // Zakres [1,10]
+            if (x <= 0 || x > 10) {
+                static int kod = x; // musimy wyrzucić wskaźnik do int
+                kod = x;
+                throw &kod;
+            }
+
+            suma += x;
+
+            if (suma == 21) {
+                throw std::string("Osiągnąłeś oczko!");
+            }
+
+            if (suma > 21) {
+                suma -= x; // cofnięcie
+                throw "Suma została przekroczona"; // const char*
+            }
+
+            std::cout << "Aktualna suma: " << suma << "\n";
+        }
+
+        // 1) Oczko — std::string
+        catch (const std::string& s) {
+            std::cout << s << "\n";
+            std::cout << "Osiągnąłeś oczko po " << proby << " próbach.\n";
+            return 0;
+        }
+
+        // 2) Suma > 21 — const char*
+        catch (const char* msg) {
+            std::cout << msg << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        // 3) Zły zakres — wskaźnik int*
+        catch (int* ptr) {
+            std::cout << "Podaj liczbę z zakresu [1,10]. Otrzymano: "
+                      << *ptr << "\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+
+        // 4) Zły typ danych — referencja double&
+        catch (double&) {
+            std::cout << "Niewłaściwy typ danych\n";
+            std::cout << "Suma pozostaje: " << suma << ". Spróbuj ponownie.\n";
+        }
+    }
+}
+
+
