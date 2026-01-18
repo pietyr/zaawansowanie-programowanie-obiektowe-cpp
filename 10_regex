@@ -1,0 +1,34 @@
+
+// RGEX
+#include <iostream>
+#include <string.h>
+#include <regex>
+using namespace std;
+
+void findPattern(string str){
+    smatch res;
+    regex rPattern("((\\+|-){1}[[:digit:]]+\\.\\d+)");
+    //regex rPattern(R"((\+|-){1}[[:digit:]]+\.\d+)");
+    regex_search(str,res,rPattern);
+    cout<<str<<endl;
+    if(res.size()!=0) cout<<"Znaleziono "<<res[0]<<endl;
+    else cout<<"Nie znaleziono"<<endl;
+}
+
+int main(){
+    string str = "Zwykla liczba 123";
+    findPattern(str);
+    str = "Zmiennoprzecinkowa liczba 12.34 bez znaku";
+    findPattern(str);
+    str = "Zmiennoprzecinkowa liczba +1.23 ze znakiem +";
+    findPattern(str);
+    str = "Zmiennoprzecinkowa liczba -12.34 ze znakiem -";
+    findPattern(str);
+
+    string line("line");
+    cout<<"Podaj wlasny ciag:"<<endl;
+    getline(cin, line);
+    findPattern(line);
+
+    return 0;
+}
