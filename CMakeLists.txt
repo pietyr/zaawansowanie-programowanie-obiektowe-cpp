@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 26)
 
 find_package(Boost REQUIRED)
 
-add_executable(lab1 lab1/main.cpp)
+add_executable(lab1-1 lab1/1-1/main.cpp
+        lab1/1-1/Person.cpp
+        lab1/1-1/Person.h
+        lab1/1-1/Teacher.cpp
+        lab1/1-1/Teacher.h)
 add_executable(lab5-1 lab5/5-1/main.cpp)
 add_executable(lab5-2 lab5/5-2/main.cpp)
 add_executable(lab6-2 lab6/6-2/main.cpp
