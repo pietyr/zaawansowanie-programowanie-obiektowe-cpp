@@ -12,6 +12,13 @@ add_executable(lab1-1 lab1/1-1/main.cpp
         lab1/1-1/Teacher.h
         lab1/1-1/Student.cpp
         lab1/1-1/Student.h)
+add_executable(lab1-2 lab1/1-2/main.cpp
+        lab1/1-2/Animal.cpp
+        lab1/1-2/Animal.h
+        lab1/1-2/Dog.cpp
+        lab1/1-2/Dog.h
+        lab1/1-2/Cat.cpp
+        lab1/1-2/Cat.h)
 add_executable(lab5-1 lab5/5-1/main.cpp)
 add_executable(lab5-2 lab5/5-2/main.cpp)
 add_executable(lab6-2 lab6/6-2/main.cpp
