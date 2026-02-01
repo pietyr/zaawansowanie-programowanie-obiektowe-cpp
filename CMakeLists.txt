@@ -39,6 +39,7 @@ add_executable(lab4-1
         lab4/4-1/Student.h
         lab4/4-1/Compare.cpp
         lab4/4-1/Compare.h)
+add_executable(lab5-0 lab5/5-0/main.cpp)
 add_executable(lab5-1 lab5/5-1/main.cpp)
 add_executable(lab5-2 lab5/5-2/main.cpp)
 add_executable(lab6-2 lab6/6-2/main.cpp
