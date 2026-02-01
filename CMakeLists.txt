@@ -32,7 +32,13 @@ add_executable(lab3-1
         lab3/3-1/Adding.h
         lab3/3-1/Student.h)
 add_executable(lab4-1
-        lab4/4-1/main.cpp)
+        lab4/4-1/main.cpp
+        lab4/4-1/Even.cpp
+        lab4/4-1/Even.h
+        lab4/4-1/Student.cpp
+        lab4/4-1/Student.h
+        lab4/4-1/Compare.cpp
+        lab4/4-1/Compare.h)
 add_executable(lab5-1 lab5/5-1/main.cpp)
 add_executable(lab5-2 lab5/5-2/main.cpp)
 add_executable(lab6-2 lab6/6-2/main.cpp

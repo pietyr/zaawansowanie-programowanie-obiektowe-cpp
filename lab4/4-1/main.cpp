@@ -3,6 +3,9 @@
 //
 #include <iostream>
 #include <vector>
+#include "Even.h"
+#include "Compare.h"
+#include "Student.h"
 using namespace std;
 
 template<typename T>
@@ -23,6 +26,10 @@ void add10(int &el) {
 
 bool isEven(int x) {
     return x % 2 == 0;
+}
+
+void showMark(Student &s) {
+    cout << s.getMark() << " ";
 }
 
 int main() {
@@ -148,6 +155,22 @@ int main() {
     cout << "Po sortowaniu" << endl;
     for_each(num3.begin(), num3.end(), printEl);
 
+    // Z operatorem
+    cout << endl << "Z operatorem" << endl;
+    for_each(num.begin(), num.end(), printEl);
+    cout << endl;
+    cout << count_if(num.begin(), num.end(), isEven) << endl;
+    cout << count_if(num.begin(), num.end(), Even(2)) << endl;
+
+    cout << "Student i compare" << endl;
+    vector<Student> st; // Stworzenie kontenera vector, który przechowuje obiekty Student
+    st.push_back(Student(1, "Ala"));
+    st.push_back(Student(5, "Ola"));
+    st.push_back(Student(2, "Piotr"));
+    for_each(st.begin(), st.end(), showMark);
+    cout << endl;
+    sort(st.begin(), st.end(), Compare()); // sort z własnym funktorem
+    for_each(st.begin(), st.end(), showMark);
 
     return 0;
 }
