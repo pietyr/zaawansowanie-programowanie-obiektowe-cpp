@@ -133,6 +133,20 @@ int main() {
 
     cout << endl;
     cout << "Funktory" << endl;
+    vector<int> num3 = {-2, -6, 7, 3, 0, 8, -9, -2};
+    for_each(num3.begin(), num3.end(), printEl);
+    int howMany = count_if(num3.begin(), num3.end(), bind2nd(greater<int>(), 0));
+    cout << endl << "wersja1: wartosc > 0 " << howMany << endl;
+
+    greater<int> f;
+    howMany = count_if(num3.begin(), num3.end(), bind2nd(f, 0));
+    cout << "wersja2: wartosc > 0 " << howMany << endl;
+
+    cout << "Przed sortowaniem" << endl;
+    for_each(num3.begin(), num3.end(), printEl);
+    sort(num3.begin(), num3.end(), greater<int>());
+    cout << "Po sortowaniu" << endl;
+    for_each(num3.begin(), num3.end(), printEl);
 
 
     return 0;
